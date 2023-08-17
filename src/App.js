@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import { Fragment } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
+import logo from "./logo.svg";
+import { privateRoutes, publicRoutes } from "./router/router";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <div className="App">
+            <Routes>
+                    {publicRoutes.map((route, index) => {
+                        let LayoutComponent;
+
+                        if (route.layout) {
+                            LayoutComponent = route.layout;
+                        } else if (route.layout == null) {
+                            LayoutComponent = Fragment;
+                        } else {
+                            LayoutComponent = DefaultLayout;
+                        }
+
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={<LayoutComponent>{route.element}</LayoutComponent>}
+                            />
+                        );
+                    })}
+
+                    {privateRoutes.map((route, index) => {
+                        let LayoutComponent;
+
+                        if (route.layout) {
+                            LayoutComponent = route.layout;
+                        } else if (route.layout == null) {
+                            LayoutComponent = Fragment;
+                        } else {
+                            LayoutComponent = DefaultLayout;
+                        }
+
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={<LayoutComponent>{route.element}</LayoutComponent>}
+                            />
+                        );
+                    })}
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

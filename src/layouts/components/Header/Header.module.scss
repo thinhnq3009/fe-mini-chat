@@ -1,0 +1,29 @@
+.container {
+    background-color: #ffffff77;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.wrapper {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1150px;
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+    .logo-container {
+        .logo {
+            margin-right: 15px;
+        }
+
+        display: flex;
+        align-items: center;
+        font-size: 26px;
+        font-weight: bold;
+        color: #232323;
+        font-family: "Comic Sans MS", "Helvetica Neue", Helvetica,;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;    
+    }
+}
