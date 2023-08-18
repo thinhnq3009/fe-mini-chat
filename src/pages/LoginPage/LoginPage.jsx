@@ -5,6 +5,8 @@ import { BsKey, BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import authenticateApi from "~/apis/authenticateApi";
+import useNotification from "~/hooks/useNotification";
 const cx = classNames.bind(style);
 
 function LoginPage() {
@@ -15,13 +17,23 @@ function LoginPage() {
         watch,
         formState: { errors },
     } = useForm();
+    const {addSuccessNotification} = useNotification();
+
+    const { login } = authenticateApi();
 
     const PasswordIcon = show ? BsEye : BsEyeSlash;
     const passwordType = show ? "text" : "password";
 
-    const onSubmit = (data) => console.log(data);
-
-    console.log(watch("username"));
+    const onSubmit = (data) => {
+        addSuccessNotification(data.username);
+        // login(data)
+        //     .then((response) => {
+        //         console.log(response);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
+    };
 
     return (
         <div className={cx("container")}>
@@ -37,7 +49,7 @@ function LoginPage() {
                                 type="text"
                                 placeholder="Enter your username"
                             />
-                            <small>Error</small>
+                            {errors.username && <small>Please enter username</small>}
                         </div>{" "}
                         <div className={cx("form-group")}>
                             <label>Password</label>
@@ -51,7 +63,7 @@ function LoginPage() {
                                 className={cx("icon", "icon-right")}
                                 onClick={() => setShow(!show)}
                             />
-                            <small></small>
+                             {errors.password && <small>Please enter password</small>}
                         </div>
                         <button className={cx("submit-btn")}>Login</button>
                     </form>
