@@ -1,9 +1,7 @@
 import style from "./NotificationContainer.module.scss";
 import classNames from "classnames/bind";
 import { useDispatch, useSelector } from "react-redux";
-import { NotificationItem } from "../NotificationItem";
-import useNotification from "~/hooks/useNotification";
-import { removeNotification } from "~/actions/notification.action";
+import { NotificationItem } from "~/components/common/NotificationItem";
 
 const cx = classNames.bind(style);
 

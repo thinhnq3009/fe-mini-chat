@@ -4,26 +4,7 @@ import {
 } from "~/actions/constants/notification";
 
 const initialState = [
-    {
-        text: "This is a new notification",
-        type: "info",
-        duration: 3000,
-    },
-    {
-        text: "This is a new notification",
-        type: "error",
-        duration: 3000,
-    },
-    {
-        text: "This is a new notification",
-        type: "warning",
-        duration: 3000,
-    },
-    {
-        text: "This is a new notification",
-        type: "success",
-        duration: 3000,
-    },
+  
 ];
 
 const notificationReducer = (state = initialState, action) => {

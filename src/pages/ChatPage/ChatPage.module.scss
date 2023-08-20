@@ -1,12 +1,34 @@
 .container {
     width: 100%;
     display: flex;
-
+    max-width: 1150px;
+    margin-left: auto;
+    margin-right: auto;
 
     .sidebar {
 
         flex: 0 260px;
+        margin-top: 2rem;
 
 
+        .input-group {
+            padding: 0;
+            border-radius: 15px;
+            background: #00000011;
+            display: flex;
+            align-items: center;
+            .icon {
+                margin-left: 12px;
+                font-size: 18px;
+            }
+
+            input {
+                padding: 10px 10px;
+                font-size: 16px;
+                font-weight: 300;
+                line-height: 20px;
+                background: transparent;
+            }
+        }
     }
 }

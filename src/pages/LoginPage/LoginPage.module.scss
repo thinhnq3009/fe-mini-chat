@@ -5,10 +5,7 @@
     justify-content: center;
 
 
-    .card {
-        padding: 3rem 2rem;
-        background-color: white;
-        border-radius: 1rem;
+    .wrapper {
         width: 100%;
         max-width: 600px;
         margin-bottom: 3rem;
@@ -63,15 +60,7 @@
             text-align: center;
         }
 
-        .submit-btn {
-            width: 100%;
-            padding: 10px;
-            border-radius: 50px;
-            color: white;
-            font-size: 16px;
-            background-image: linear-gradient(to right, #00C897, #15dfac);
-            cursor: pointer;
-        }
+        
     }
 
 }

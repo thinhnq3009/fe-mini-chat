@@ -3,10 +3,10 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {} from "react-router-dom";
-import GlobalStyle from "./components/GlobalStyle/GlobalStyle";
+import GlobalStyle from "./components/global/GlobalStyle/GlobalStyle";
 import { Provider } from "react-redux";
 import store from "./store";
-import { NotificationContainer } from "./components/NotificationContainer";
+import { NotificationContainer } from "./components/global/NotificationContainer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

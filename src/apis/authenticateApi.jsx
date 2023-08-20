@@ -7,10 +7,12 @@ export default function authenticateApi() {
             checker(data, ["username", "displayName", "password", "confirmPassword"]);
             return axiosClient.post("/auth/register", data);
         },
-
-        login: function (data) {
-            checker(data, ["username", 'password']);
+        loginApi: function (data) {
+            checker(data, ["username", "password"]);
             return axiosClient.post("/auth/login", data);
-        }
+        },
+        authenticateToken: function () {
+            return axiosClient.get("/auth/authenticate");
+        },
     };
 }
