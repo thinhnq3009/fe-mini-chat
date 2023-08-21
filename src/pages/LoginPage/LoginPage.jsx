@@ -47,7 +47,7 @@ function LoginPage() {
     return (
         <div className={cx("container")}>
             <div className={cx("wrapper")}>
-               <CardWrapper>
+               <CardWrapper className="px-5">
                     <div className={cx("header")}>Login Form</div>
                     <div className={cx("body")}>
                         <form onSubmit={handleSubmit(onSubmit)}>

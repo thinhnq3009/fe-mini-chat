@@ -1,7 +1,57 @@
 .wrapper {
-    padding: 1em 2em;
+    display: flex;
+    flex-direction: column;
+    padding: 1em 1em;
     background-color: white !important;
     border-radius: 15px;
     box-shadow: 6px 6px 12px #73a2ad,
         -6px -6px 12px #4affff58;
+
+    .header {
+        padding-bottom: 1rem;
+        margin-bottom: .5rem;
+        border-bottom: 1px solid #5b5e6177;
+    }
+
+    .body {
+        flex: 1;
+
+
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        // Ẩn cuộn ngang
+        &::-webkit-scrollbar-horizontal {
+            display: none;
+        }
+
+        // Ẩn cuộn dọc
+        &::-webkit-scrollbar-thumb {
+            display: none;
+        }
+    }
+
+    .bodyOverScroll {
+        overflow: scroll;
+    }
+
+    .bodyOverXScroll {
+        overflow-x: scroll;
+    }
+
+    .bodyOverYScroll {
+        overflow-y: scroll;
+    }
+
+    .footer {
+        padding-top: 1rem;
+        margin-bottom: 0.5rem;
+        border-top: 1px solid #5b5e6177;
+
+        &.textOnly {
+            text-align: center;
+        }
+    }
 }

@@ -1,15 +1,17 @@
 .container {
+    padding: 1rem;
     width: 100%;
     display: flex;
-    max-width: 1150px;
     margin-left: auto;
     margin-right: auto;
 
     .sidebar {
 
-        flex: 0 260px;
+        flex: 0 26%;
+        min-width: 320px;
+        padding-right: 1rem;
         margin-top: 2rem;
-
+        height: calc(100vh - 4rem);
 
         .input-group {
             padding: 0;
@@ -17,6 +19,7 @@
             background: #00000011;
             display: flex;
             align-items: center;
+
             .icon {
                 margin-left: 12px;
                 font-size: 18px;
@@ -31,4 +34,16 @@
             }
         }
     }
+}
+
+.card {
+    height: 100%;
+}
+
+.avatar {
+    border-radius: 50%;
+}
+
+.username {
+    font-size: 13px;
 }

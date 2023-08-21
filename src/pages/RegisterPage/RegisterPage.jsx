@@ -12,38 +12,44 @@ const cx = classNames.bind(style);
 
 function RegisterPage() {
     const [show, setShow] = useState(false);
-    const {register, handleSubmit, watch, formState: {errors}} = useForm();
-    const {register: apiRegister} = authenticateApi();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+    const { register: apiRegister } = authenticateApi();
     const PasswordIcon = show ? BsEye : BsEyeSlash;
     const passwordType = show ? "text" : "password";
 
-    const onSubmit = data => {
-       apiRegister(data)
-       .then(response => {
-            console.log(response);
-       })
-       .catch(err => {
-            console.log(err);
-       })
+    const onSubmit = (data) => {
+        apiRegister(data)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
-    console.log(watch('username'))
+    console.log(watch("username"));
 
     return (
         <div className={cx("container")}>
             <div className={cx("wrapper")}>
-                <CardWrapper>
-                    <div className={cx("header")}>Login Form</div>
+                <CardWrapper className="px-5">
+                    <div className={cx("header")}>Register Account</div>
                     <div className={cx("body")}>
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmit(onSubmit)} autoComplete={false}>
                             <div className={cx("form-group")}>
                                 <label>Username</label>
                                 <BiUser className={cx("icon", "icon-left")} />
-                                <input 
-                                {...register("username", {required: true})}
-                                type="text" 
-                                placeholder="Enter your username"/>
-                               {errors.username && <small className={cx("error")}></small>}
+                                <input
+                                    {...register("username", { required: true })}
+                                    type="text"
+                                    placeholder="Enter your username"
+                                />
+                                {errors.username && <small className={cx("error")}></small>}
                             </div>
                             <div className={cx("form-group")}>
                                 <label>Display Name</label>
@@ -53,28 +59,30 @@ function RegisterPage() {
                                     type="text"
                                     placeholder="Enter your display name"
                                 />
-                                 {errors.displayName && <small className={cx("error")}></small>}
+                                {errors.displayName && <small className={cx("error")}></small>}
                             </div>
                             <div className={cx("form-group")}>
                                 <label>Password</label>
                                 <BsKey className={cx("icon", "icon-left")} />
-                                <input 
-                                {...register("password", {required: true})}
-                                type={passwordType} 
-                                placeholder="Enter your password"/>
+                                <input
+                                    {...register("password", { required: true })}
+                                    type={passwordType}
+                                    placeholder="Enter your password"
+                                />
                                 <PasswordIcon
                                     className={cx("icon", "icon-right")}
                                     onClick={() => setShow(!show)}
                                 />
-                                 {errors.username && <small className={cx("error")}></small>}
+                                {errors.username && <small className={cx("error")}></small>}
                             </div>
                             <div className={cx("form-group")}>
                                 <label>Password</label>
                                 <BsKey className={cx("icon", "icon-left")} />
-                                <input 
-                                {...register("confirmPassword", {required: true})}
-                                type={passwordType} 
-                                placeholder="Enter your password again"/>
+                                <input
+                                    {...register("confirmPassword", { required: true })}
+                                    type={passwordType}
+                                    placeholder="Enter your password again"
+                                />
                                 <PasswordIcon
                                     className={cx("icon", "icon-right")}
                                     onClick={() => setShow(!show)}
@@ -85,7 +93,7 @@ function RegisterPage() {
                         </form>
                     </div>
                     <div className={cx("card-text")}>
-                        Do you have an account ?  <Link to="/login">Login here</Link>
+                        Do you have an account ? <Link to="/login">Login here</Link>
                     </div>
                 </CardWrapper>
             </div>

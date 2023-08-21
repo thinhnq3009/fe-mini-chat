@@ -5,7 +5,11 @@ const cx = classNames.bind(style);
 
 
 function ChatContainer() {
-    return ( <>ChatContainer</> );
+    return ( 
+        <div className={cx("container")}>
+            
+        </div>
+     );
 }
 
 export default ChatContainer;
