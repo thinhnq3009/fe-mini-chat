@@ -12,19 +12,29 @@ function ConversationItem({
     active,
     online = true,
     chatting = false,
-    ...passProps
+    onClick = () => {},
+    isHeader = false,
 }) {
-    const sentAt = useTime(lastMessage.sentAt);
+    const sentAt = useTime(lastMessage ? lastMessage.sentAt : null);
+
+    // console.log("Pass props", passProps);
 
     return (
-        <div className={cx("wrapper", { active })}>
+        <div className={cx("wrapper", { active })} onClick={onClick} >
             <img className={cx("avatar")} src={avatar} alt={name} />
-            <div className={cx("info", {online})}>
+            <div className={cx("info", { online })}>
                 <h6 className={cx("title")}>{name}</h6>
                 {lastMessage && (
                     <>
-                        <span className={cx("last-message")}>{lastMessage.content}</span>
-                        <span className={cx("sent-at")}>{sentAt.fromNow}</span>
+                        <span className={cx("last-message", { hidden: isHeader })}>
+                            {lastMessage.content}
+                        </span>
+                        <span className={cx("sent-at", { hidden: isHeader })}>
+                            {sentAt.fromNow}
+                        </span>
+                        {/* <span className={cx("sent-at", { hidden: !isHeader })}>
+                            {onlineAt.fromNow}
+                        </span> */}
                     </>
                 )}
             </div>

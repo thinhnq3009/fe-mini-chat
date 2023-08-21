@@ -2,11 +2,8 @@
 import {formatDistanceToNowStrict, parseJSON} from 'date-fns'
 
 function useTime(initialTime, outStringPattern) {
-    const defaultPattern = "dd/MM/yyyy HH:mm:ss";
 
-
-
-    const date = parseJSON(initialTime)
+    const date = parseJSON(initialTime || new Date(initialTime).toISOString())
 
 
     return {

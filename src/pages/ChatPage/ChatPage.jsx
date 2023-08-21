@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { conversationApi } from "~/apis/conversationApi";
 import { setConversations } from "~/actions/conversation.action";
+import { setConversation } from "~/actions/chatbox.action";
 const cx = classNames.bind(style);
 
 function ChatPage() {
@@ -26,7 +27,11 @@ function ChatPage() {
             .catch((err) => console.error(err));
     }, []);
 
-    console.log(userLoggedIn);
+    const clickHandler = (conversation) => {
+        console.log(conversation);
+        dispatch(setConversation(conversation));
+    };
+
     // UI elements
 
     const header = (
@@ -61,7 +66,12 @@ function ChatPage() {
                 <CardWrapper header={header} footer={footer} bodyOverYScroll className={cx("card")}>
                     {conversations &&
                         conversations.map((item, index) => (
-                            <ConversationItem key={item.id} active={index == 0} {...item} />
+                            <ConversationItem
+                                onClick={() => clickHandler(item)}
+                                key={item.id}
+                                active={index == 0}
+                                {...item}
+                            />
                         ))}
                 </CardWrapper>
             </div>

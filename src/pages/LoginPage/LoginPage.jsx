@@ -2,7 +2,7 @@ import style from "./LoginPage.module.scss";
 import classNames from "classnames/bind";
 import { BiUser } from "react-icons/bi";
 import { BsKey, BsEyeSlash, BsEye } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import authenticateApi from "~/apis/authenticateApi";
@@ -43,6 +43,10 @@ function LoginPage() {
                 addErrorNotification(err.message);
             });
     };
+
+    useEffect(() => {
+        document.title = "Welcome to Mini Chat";
+    }, []);
 
     return (
         <div className={cx("container")}>
