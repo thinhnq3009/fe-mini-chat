@@ -1,5 +1,11 @@
 // reducers/chatboxReducer.js
-import { ADD_MESSAGE, ADD_MESSAGES, SET_CONVERSATION, SET_MESSAGES, SET_PAGE } from "~/actions/constants/chatbox";
+import {
+    ADD_MESSAGE,
+    ADD_MESSAGES,
+    SET_CONVERSATION,
+    SET_MESSAGES,
+    SET_PAGE,
+} from "~/actions/constants/chatbox";
 
 const initialState = {
     messages: [],
@@ -12,7 +18,7 @@ const chatboxReducer = (state = initialState, action) => {
         case ADD_MESSAGE:
             return {
                 ...state,
-                messages: [...state.messages, action.payload],
+                messages: [action.payload, ...state.messages],
             };
         case ADD_MESSAGES:
             return {
@@ -29,11 +35,11 @@ const chatboxReducer = (state = initialState, action) => {
                 ...state,
                 currentPage: action.payload,
             };
-        case SET_CONVERSATION: 
+        case SET_CONVERSATION:
             return {
                 ...state,
                 conversation: action.payload,
-            }
+            };
         default:
             return state;
     }

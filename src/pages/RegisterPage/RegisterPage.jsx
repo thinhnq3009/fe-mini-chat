@@ -5,9 +5,10 @@ import { BsKey, BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import authenticateApi from "~/apis/authenticateApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "~/components/common/Button";
 import { CardWrapper } from "~/components/common/CardWrapper";
+import useNotification from "~/hooks/useNotification";
 const cx = classNames.bind(style);
 
 function RegisterPage() {
@@ -19,16 +20,23 @@ function RegisterPage() {
         formState: { errors },
     } = useForm();
     const { register: apiRegister } = authenticateApi();
+    const {  addNotification } = useNotification();
+    const navigate = useNavigate();
     const PasswordIcon = show ? BsEye : BsEyeSlash;
     const passwordType = show ? "text" : "password";
 
     const onSubmit = (data) => {
         apiRegister(data)
-            .then((response) => {
-                console.log(response);
+            .then(({statusCode, message}) => {
+                if (statusCode !== 200) {
+                    addNotification(message, 'info')
+                }
+                addNotification(message, 'success')
+                navigate("/login");
+
             })
-            .catch((err) => {
-                console.log(err);
+            .catch(({ message }) => {
+                addNotification(message, 'error');
             });
     };
 

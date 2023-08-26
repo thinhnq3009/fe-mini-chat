@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { login, removeToken } from "./actions/user.action";
 import authenticateApi from "./apis/authenticateApi";
+import useNotification from "./hooks/useNotification";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 import logo from "./logo.svg";
 import { privateRoutes, publicRoutes } from "./router/router";
 
 function App() {
     const { authenticateToken } = authenticateApi();
-
     // console.log(
     //     "All State in Application",
     //     useSelector((state) => state)

@@ -7,6 +7,7 @@ const cx = classNames.bind(style);
 function ConversationItem({
     avatar,
     name,
+    username,
     lastMessage,
     timeSent,
     active,
@@ -32,9 +33,9 @@ function ConversationItem({
                         <span className={cx("sent-at", { hidden: isHeader })}>
                             {sentAt.fromNow}
                         </span>
-                        {/* <span className={cx("sent-at", { hidden: !isHeader })}>
-                            {onlineAt.fromNow}
-                        </span> */}
+                        <span className={cx("sent-at", { hidden: !isHeader })}>
+                            {username}
+                        </span>
                     </>
                 )}
             </div>

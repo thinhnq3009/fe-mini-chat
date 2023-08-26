@@ -7,7 +7,7 @@ function messageApi() {
         },
         sendMessage: function (conversationId, message) {
             const data = { conversationId, message };
-            return axiosClient.post(`/message/send`, { data });
+            return axiosClient.post(`/message/send`, { ...data });
         },
     };
 }
