@@ -3,27 +3,38 @@ import classNames from "classnames/bind";
 import { ChatContainer } from "~/components/ChatContainer";
 import { ConversationItem } from "~/components/common/ConversationItem";
 import { CardWrapper } from "~/components/common/CardWrapper";
-import { IoIosSearch } from "react-icons/io";
+import { IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
 import { LuLogOut } from "react-icons/lu";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { conversationApi } from "~/apis/conversationApi";
 import { setConversations } from "~/actions/conversation.action";
 import { setConversation } from "~/actions/chatbox.action";
 import { logout } from "~/actions/user.action";
 import { useNavigate } from "react-router-dom";
 import Tippy from "@tippyjs/react";
+import { debounce } from "lodash";
 const cx = classNames.bind(style);
 
 function ChatPage() {
     // Logic
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const userLoggedIn = useSelector((state) => state.user.user);
     const conversations = useSelector((s) => s.conversations);
-    const dispatch = useDispatch();
-    const { getConversation } = conversationApi();
-    const navigate = useNavigate();
+    const { id: chattingId } = useSelector((state) => state.chatbox.conversation) || { id: null };
 
+    const { getConversation } = conversationApi();
+
+    const [keyword, setKeyword] = useState("");
+
+    // Handle find conversation
+    const handlerSearch = (value) => {
+        setKeyword(value);
+    };
+
+    // getConversations
     useEffect(() => {
         getConversation()
             .then(({ data }) => {
@@ -39,9 +50,7 @@ function ChatPage() {
         dispatch(setConversation(conversation));
     };
 
-    const handelAddFriend = ()=> {
-
-    }
+    const handelAddFriend = () => {};
 
     const logoutHandler = () => {
         dispatch(logout());
@@ -51,10 +60,24 @@ function ChatPage() {
     // UI elements
 
     const header = (
-        <div className={cx("input-group")}>
-            <IoIosSearch className={cx("icon")} />
-            <input type="text" placeholder="Search" />
-        </div>
+        <>
+            <div className={cx("header-wrapper")}>
+                <div className={cx("input-group")}>
+                    <IoIosSearch className={cx("icon")} />
+                    <input
+                        onChange={(e) => handlerSearch(e.target.value)}
+                        className="flex-grow-1"
+                        type="text"
+                        placeholder="Search conversation"
+                    />
+                </div>
+                <Tippy content="Add more friends" delay={[500, 0]}>
+                    <button onClick={handelAddFriend} className={cx("button")}>
+                        <AiOutlineUsergroupAdd />
+                    </button>
+                </Tippy>
+            </div>
+        </>
     );
 
     const footer = userLoggedIn && (
@@ -73,16 +96,20 @@ function ChatPage() {
                 </div>
             </div>
             <div>
-                <Tippy content="Add more friends" delay={[500, 0]}>
-                    <button onClick={handelAddFriend} className={cx("button")}>
-                        <AiOutlineUsergroupAdd />
+                <Tippy content="Notification" delay={[500, 0]}>
+                    <button
+                        onClick={logoutHandler}
+                        data-badge="1"
+                        className={cx("button", "badge")}
+                    >
+                        <IoIosNotificationsOutline />
                     </button>
                 </Tippy>
                 <Tippy content="Logout" delay={[500, 0]}>
                     <button onClick={logoutHandler} className={cx("button")}>
                         <LuLogOut />
                     </button>
-                </Tippy>
+                </Tippy>{" "}
             </div>
         </div>
     );
@@ -92,14 +119,18 @@ function ChatPage() {
             <div className={cx("sidebar")}>
                 <CardWrapper header={header} footer={footer} bodyOverYScroll className={cx("card")}>
                     {conversations &&
-                        conversations.map((item, index) => (
-                            <ConversationItem
-                                onClick={() => changeConversationHandler(item)}
-                                key={item.id}
-                                active={index === 0}
-                                {...item}
-                            />
-                        ))}
+                        conversations
+                            .filter((conversation) =>
+                                conversation.name.toLowerCase().includes(keyword.toLowerCase())
+                            )
+                            .map(item => (
+                                <ConversationItem
+                                    onClick={() => changeConversationHandler(item)}
+                                    key={item.id}
+                                    active={item.id === chattingId}
+                                    {...item}
+                                />
+                            ))}
                 </CardWrapper>
             </div>
 

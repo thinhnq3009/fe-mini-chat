@@ -12,19 +12,27 @@
         padding-right: 1rem;
         height: calc(100vh - 4rem);
 
+        .header-wrapper {
+            display: flex;
+        }
+
         .input-group {
+            flex: 1;
             padding: 0;
             border-radius: 15px;
             background: #00000011;
             display: flex;
             align-items: center;
             margin-bottom: 0.6rem;
+            margin-right: 3px;
+
             .icon {
                 margin-left: 12px;
                 font-size: 18px;
             }
 
             input {
+                flex: 1;
                 padding: 10px 10px;
                 font-size: 16px;
                 font-weight: 300;
@@ -60,8 +68,24 @@
     cursor: pointer;
     background-color: transparent;
     transition: all .25s;
+    position: relative;
+
     &:hover {
         background-color: #00000022;
         border-radius: 30px;
+    }
+
+    &.badge::after {
+        content: attr(data-badge);
+        position: absolute;
+        font-size: 12px;
+        line-height: 1;
+        background-color: #F31559;
+        padding: 3px 5px;
+        min-width: 20px;
+        top: 0;
+        right: 0;
+        color: white;
+        border-radius: 100px;
     }
 }

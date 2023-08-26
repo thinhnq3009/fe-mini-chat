@@ -17,7 +17,6 @@ function ChatContainer({}) {
     const dispatch = useDispatch();
     const { getMessage } = messageApi();
 
-    console.log(messages);
 
     useEffect(() => {
         if (!conversation.id) return;
@@ -28,7 +27,7 @@ function ChatContainer({}) {
     }, [conversation]);
 
     // UI
-    const header = conversation.id && <ConversationItem isHeader {...conversation} />;
+    const header = conversation.id && <ConversationItem hover={false} isHeader {...conversation} />;
 
     return (
         <div className={cx("container")}>
@@ -41,7 +40,7 @@ function ChatContainer({}) {
                             ))}
                     </div>
                     <div className={cx("input-message-container")}>
-                        <InputMessage/>
+                        <InputMessage />
                     </div>
                 </div>
             </CardWrapper>
