@@ -13,13 +13,20 @@
     align-items: center;
     overflow: hidden;
     border-radius: 15px;
+    position: relative;
 
     &.hover:hover {
         background-color: #dfdfdf;
     }
 
     &.active {
-        background-color: #8efff484;
+        $a: 0.25;
+        background-color: rgba(249, 139, 255, $a);
+        background-image: linear-gradient(45deg,
+         rgba(249, 139, 255, $a) 0%, 
+         rgba(41, 209, 255, $a),
+         rgba(43, 255, 135, $a) 90%);
+
     }
 
     .avatar {
@@ -50,16 +57,17 @@
 
         .sent-at {
             font-size: 12px;
+            line-height: 1;
         }
     }
 
-    .online::after {
+    &::after {
         $size : 14px;
         content: "";
         position: absolute;
         display: block;
-        bottom: 0;
-        left: -27px;
+        bottom: .6rem;
+        left: 45px;
         width: $size;
         height: $size;
         border-radius: 50%;

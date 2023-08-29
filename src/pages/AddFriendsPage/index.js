@@ -1,0 +1,1 @@
+export {default as AddFriendsPage} from './AddFriendsPage'

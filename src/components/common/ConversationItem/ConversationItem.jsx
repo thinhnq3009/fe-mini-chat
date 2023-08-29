@@ -34,9 +34,9 @@ function ConversationItem({
                         <span className={cx("sent-at", { hidden: isHeader })}>
                             {sentAt.fromNow}
                         </span>
-                        <span className={cx("sent-at", { hidden: !isHeader })}>{username}</span>
                     </>
                 )}
+                <span className={cx("sent-at", { hidden: isHeader })}>{username}</span>
             </div>
         </div>
     );

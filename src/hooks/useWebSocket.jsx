@@ -13,25 +13,22 @@ const useWebSocket = () => {
     const onReceiveMessage = useRef(() => {});
 
     return {
-
         // init: () => {
 
         // },
 
-        connect: (conversationId) => {
+        connect: (channel) => {
             var socket = new SockJS("http://localhost:8080/socket");
             stompClient.current = over(socket);
-
-            console.log("Token trong hàm connect: ", token);
 
             stompClient.current.connect(
                 { Authorization: `Bearer ${token}` },
                 () => {
-                    stompClient.current.subscribe(`/user/${conversationId}/messages`, (frame) => {
+                    stompClient.current.subscribe(channel, (frame) => {
                         let responseData;
                         try {
                             responseData = JSON.parse(frame.body);
-                            onReceiveMessage.current(responseData)
+                            onReceiveMessage.current(responseData);
                         } catch (e) {
                             console.error(frame);
                             throw new Error("Bad response form server");
@@ -44,7 +41,9 @@ const useWebSocket = () => {
 
         disconnect: () => {
             if (!stompClient.current) return;
-            stompClient.current.disconnect();
+            try {
+                stompClient.current.disconnect();
+            } catch (error) {}
         },
 
         setReceiveMessageHandler: (callback) => {
@@ -52,10 +51,10 @@ const useWebSocket = () => {
                 throw new Error("ReceiveMessageCallback much be a function");
             onReceiveMessage.current = callback;
         },
-        sendMessage: (message, conversationId) => {
+        sendMessage: (receiver, message, conversationId) => {
             if (stompClient.current && message && conversationId) {
                 stompClient.current.send(
-                    "/app/send-message",
+                    receiver,
                     { Authorization: `Bearer ${token}` },
                     JSON.stringify({ content: message, conversationId })
                 );

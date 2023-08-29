@@ -31,7 +31,7 @@ function InputMessage() {
             return;
         }
 
-        connect(conversation.id);
+        connect(`/user/${conversation.id}/messages`);
 
         return disconnect;
     }, [token, conversation]);
@@ -39,7 +39,7 @@ function InputMessage() {
     const handlerSendMessage = () => {
         console.log(conversation, message);
 
-        sendSocket(message, conversation.id);
+        sendSocket("/app/send-message", message, conversation.id);
 
         // if (!conversation) return
         // if (!message) return

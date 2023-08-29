@@ -37,7 +37,7 @@ function LoginPage() {
             .then((response) => {
                 dispatch(login(response.data));   
                 addSuccessNotification(`Welcome back ${response.data.user.displayName}`);         
-                navigate("/chat")
+                window.location.href = "/chat"
             })
             .catch((err) => {
                 addErrorNotification(err.message);

@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import { ChatContainer } from "~/components/ChatContainer";
 import { ConversationItem } from "~/components/common/ConversationItem";
 import { CardWrapper } from "~/components/common/CardWrapper";
-import { IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
+import { IoIosNotificationsOutline, IoIosSearch, IoMdClose } from "react-icons/io";
 import { LuLogOut } from "react-icons/lu";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,20 +12,28 @@ import { conversationApi } from "~/apis/conversationApi";
 import { setConversations } from "~/actions/conversation.action";
 import { setConversation } from "~/actions/chatbox.action";
 import { logout } from "~/actions/user.action";
-import { useNavigate } from "react-router-dom";
-import Tippy from "@tippyjs/react";
+import { Link, useNavigate } from "react-router-dom";
+import Tippy from "@tippyjs/react/headless";
 import { debounce } from "lodash";
+import ModalWrapper from "~/components/common/ModalWrapper/ModalWrapper";
+import useWebSocket from "~/hooks/useWebSocket";
+import { RequestContainer } from "~/components/common/RequestContainer";
+import accountApi from "~/apis/accountApi";
 const cx = classNames.bind(style);
 
 function ChatPage() {
     // Logic
+    const [friendRequest, setFriendRequest] = useState([]);
+    const [showTippy, setShow] = useState(false);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const userLoggedIn = useSelector((state) => state.user.user);
     const conversations = useSelector((s) => s.conversations);
     const { id: chattingId } = useSelector((state) => state.chatbox.conversation) || { id: null };
-
+    const { connect, disconnect } = useWebSocket();
     const { getConversation } = conversationApi();
+    const { getFriendRequests } = accountApi();
 
     const [keyword, setKeyword] = useState("");
 
@@ -33,6 +41,14 @@ function ChatPage() {
     const handlerSearch = (value) => {
         setKeyword(value);
     };
+
+    useEffect(() => {
+        if (!userLoggedIn) return;
+
+        connect(`/user/${userLoggedIn.username}/notification`);
+
+        return disconnect;
+    }, []);
 
     // getConversations
     useEffect(() => {
@@ -46,11 +62,17 @@ function ChatPage() {
             .catch((err) => console.error(err));
     }, []);
 
+    // Get Friend Requests
+    useEffect(function () {
+        getFriendRequests().then(({ data }) => {
+            setFriendRequest(data);
+            console.log(data);
+        });
+    }, []);
+
     const changeConversationHandler = (conversation) => {
         dispatch(setConversation(conversation));
     };
-
-    const handelAddFriend = () => {};
 
     const logoutHandler = () => {
         dispatch(logout());
@@ -68,13 +90,18 @@ function ChatPage() {
                         onChange={(e) => handlerSearch(e.target.value)}
                         className="flex-grow-1"
                         type="text"
+                        value={keyword}
                         placeholder="Search conversation"
+                    />
+                    <IoMdClose
+                        onClick={() => handlerSearch("")}
+                        className={cx("icon", "close-icon", { show: !!keyword })}
                     />
                 </div>
                 <Tippy content="Add more friends" delay={[500, 0]}>
-                    <button onClick={handelAddFriend} className={cx("button")}>
+                    <Link to="/add-friends" className={cx("button")}>
                         <AiOutlineUsergroupAdd />
-                    </button>
+                    </Link>
                 </Tippy>
             </div>
         </>
@@ -96,15 +123,30 @@ function ChatPage() {
                 </div>
             </div>
             <div>
-                <Tippy content="Notification" delay={[500, 0]}>
-                    <button
-                        onClick={logoutHandler}
-                        data-badge="1"
-                        className={cx("button", "badge")}
+                <Tippy
+                    interactive
+                    visible={showTippy}
+                    render={(attrs) => (
+                        <div tabIndex="-1" {...attrs}>
+                            <RequestContainer
+                                friendRequest={friendRequest}
+                                setFriendRequest={setFriendRequest}
+                            />
+                        </div>
+                    )}
+                >
+                    <div></div>
+                </Tippy>
+                <button
+                        onClick={() => {
+                            setShow(!showTippy);
+                            console.log(showTippy);
+                        }}
+                        data-badge={friendRequest.length}
+                        className={cx("button", { badge: friendRequest.length > 0 })}
                     >
                         <IoIosNotificationsOutline />
                     </button>
-                </Tippy>
                 <Tippy content="Logout" delay={[500, 0]}>
                     <button onClick={logoutHandler} className={cx("button")}>
                         <LuLogOut />
@@ -123,7 +165,7 @@ function ChatPage() {
                             .filter((conversation) =>
                                 conversation.name.toLowerCase().includes(keyword.toLowerCase())
                             )
-                            .map(item => (
+                            .map((item) => (
                                 <ConversationItem
                                     onClick={() => changeConversationHandler(item)}
                                     key={item.id}
