@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/fe-mini-chat/static/css/main.1ea6c0d0.css",
+    "main.js": "/fe-mini-chat/static/js/main.3cf3e667.js",
+    "static/js/787.1d91cd83.chunk.js": "/fe-mini-chat/static/js/787.1d91cd83.chunk.js",
+    "static/media/logo.svg": "/fe-mini-chat/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "static/media/3.svg": "/fe-mini-chat/static/media/3.27c1c37df4d29322528b52959875d870.svg",
+    "index.html": "/fe-mini-chat/index.html",
+    "main.1ea6c0d0.css.map": "/fe-mini-chat/static/css/main.1ea6c0d0.css.map",
+    "main.3cf3e667.js.map": "/fe-mini-chat/static/js/main.3cf3e667.js.map",
+    "787.1d91cd83.chunk.js.map": "/fe-mini-chat/static/js/787.1d91cd83.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1ea6c0d0.css",
+    "static/js/main.3cf3e667.js"
+  ]
+}
