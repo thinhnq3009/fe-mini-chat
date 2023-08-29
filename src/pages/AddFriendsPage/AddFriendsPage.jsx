@@ -1,16 +1,15 @@
-import style from "./AddFriendsPage.module.scss";
-import classNames from "classnames/bind";
-import { CardWrapper } from "~/components/common/CardWrapper";
-import { IoIosArrowBack, IoIosSearch, IoMdClose } from "react-icons/io";
-import { useEffect, useState } from "react";
-import { debounce, result } from "lodash";
-import accountApi from "~/apis/accountApi";
-import { ConversationItem } from "~/components/common/ConversationItem";
-import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import { MdOutlineBookmarkAdded } from "react-icons/md";
-import { Link } from "react-router-dom";
 import Tippy from "@tippyjs/react";
+import classNames from "classnames/bind";
+import { useEffect, useState } from "react";
+import { AiOutlineUsergroupAdd } from "react-icons/ai";
+import { IoIosArrowBack, IoIosSearch, IoMdClose } from "react-icons/io";
+import { MdOutlineBookmarkAdded } from "react-icons/md";
+import accountApi from "~/apis/accountApi";
+import { CardWrapper } from "~/components/common/CardWrapper";
+import { HashLink as Link } from "react-router-hash-link";
+import { ConversationItem } from "~/components/common/ConversationItem";
 import useNotification from "~/hooks/useNotification";
+import style from "./AddFriendsPage.module.scss";
 
 const cx = classNames.bind(style);
 
@@ -61,14 +60,14 @@ function AddFriendsPage() {
             <div className="position-relative">
                 <h4 className="text-center mb-3">Find Friends</h4>
                 <Tippy content="Back to chat page" delay={[500, 0]}>
-                    <a
-                        href="/chat"
+                    <Link
+                        to="/chat"
                         className="bg-transparent px-1 d-flex align-item-center position-absolute top-0"
                     >
                         <h4>
                             <IoIosArrowBack />
                         </h4>
-                    </a>
+                    </Link>
                 </Tippy>
             </div>
 

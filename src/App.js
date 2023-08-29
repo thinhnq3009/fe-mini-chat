@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { login, removeToken } from "./actions/user.action";
 import authenticateApi from "./apis/authenticateApi";
 import useNotification from "./hooks/useNotification";
@@ -24,14 +24,14 @@ function App() {
             .catch((err) => {
                 dispatch(removeToken());
                 console.error(err);
-                if (window.location.pathname !== "/login") {
-                    window.location.href = "/login";
+                if (window.location.pathname !== "/#login") {
+                    window.location.href = "/#login";
                 }
             });
     }, []);
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className="App">
                 <Routes>
                     {publicRoutes.map((route, index) => {
@@ -75,7 +75,7 @@ function App() {
                     })}
                 </Routes>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

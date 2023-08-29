@@ -12,7 +12,8 @@ import { conversationApi } from "~/apis/conversationApi";
 import { setConversations } from "~/actions/conversation.action";
 import { setConversation } from "~/actions/chatbox.action";
 import { logout } from "~/actions/user.action";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import Tippy from "@tippyjs/react/headless";
 import { debounce } from "lodash";
 import ModalWrapper from "~/components/common/ModalWrapper/ModalWrapper";
@@ -138,15 +139,15 @@ function ChatPage() {
                     <div></div>
                 </Tippy>
                 <button
-                        onClick={() => {
-                            setShow(!showTippy);
-                            console.log(showTippy);
-                        }}
-                        data-badge={friendRequest.length}
-                        className={cx("button", { badge: friendRequest.length > 0 })}
-                    >
-                        <IoIosNotificationsOutline />
-                    </button>
+                    onClick={() => {
+                        setShow(!showTippy);
+                        console.log(showTippy);
+                    }}
+                    data-badge={friendRequest.length}
+                    className={cx("button", { badge: friendRequest.length > 0 })}
+                >
+                    <IoIosNotificationsOutline />
+                </button>
                 <Tippy content="Logout" delay={[500, 0]}>
                     <button onClick={logoutHandler} className={cx("button")}>
                         <LuLogOut />

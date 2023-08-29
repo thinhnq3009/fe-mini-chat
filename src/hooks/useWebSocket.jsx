@@ -24,16 +24,20 @@ const useWebSocket = () => {
             stompClient.current.connect(
                 { Authorization: `Bearer ${token}` },
                 () => {
-                    stompClient.current.subscribe(channel, (frame) => {
-                        let responseData;
-                        try {
-                            responseData = JSON.parse(frame.body);
-                            onReceiveMessage.current(responseData);
-                        } catch (e) {
-                            console.error(frame);
-                            throw new Error("Bad response form server");
-                        }
-                    });
+                    try {
+                        stompClient.current.subscribe(channel, (frame) => {
+                            let responseData;
+                            try {
+                                responseData = JSON.parse(frame.body);
+                                onReceiveMessage.current(responseData);
+                            } catch (e) {
+                                console.error(frame);
+                                throw new Error("Bad response form server");
+                            }
+                        });
+                    } catch (error) {
+                        console.error("Error when subscribing to server " + channel);
+                    }
                 },
                 () => console.log("Error connecting")
             );

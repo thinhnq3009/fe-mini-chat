@@ -4,7 +4,8 @@ import { BiUser } from "react-icons/bi";
 import { BsKey, BsEyeSlash, BsEye } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import authenticateApi from "~/apis/authenticateApi";
 import useNotification from "~/hooks/useNotification";
 import { useDispatch } from "react-redux";
@@ -37,7 +38,7 @@ function LoginPage() {
             .then((response) => {
                 dispatch(login(response.data));   
                 addSuccessNotification(`Welcome back ${response.data.user.displayName}`);         
-                window.location.href = "/chat"
+                window.location.href = "/#chat"
             })
             .catch((err) => {
                 addErrorNotification(err.message);
