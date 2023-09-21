@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-    baseURL: "http://localhost:8080/api/v1",
+    baseURL: "https://back-end-mini-chat-c1c5323f3036.herokuapp.com/api/v1",
     headers: {
         "Content-Type": "application/json",
     },
